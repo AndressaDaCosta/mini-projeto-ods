@@ -14,7 +14,7 @@
 			rel="stylesheet" />
 		<link
 			rel="stylesheet"
-			href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
+			href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
 	</head>
 	<body>
 		<div class="dashboard-container">
@@ -35,14 +35,75 @@
 			</header>
 
 			<main class="dashboard-content">
+				<section class="search-section">
+					<div class="search-container">
+						<div class="search-form">
+							<div class="search-input-group">
+								<input
+									type="text"
+									id="searchInput"
+									placeholder="Pesquisar por nome ou bairro..."
+									class="search-input" />
+								<button
+									type="button"
+									id="searchButton"
+									class="search-button">
+									<i class="fas fa-search"></i>
+									Pesquisar
+								</button>
+							</div>
+						</div>
+					</div>
+				</section>
+
+				<section class="filter-section">
+					<div class="filter-title">
+						<i class="fas fa-filter"></i>
+						Filtros e Ações
+					</div>
+					<div class="filter-buttons">
+						<button
+							class="filter-btn active"
+							data-filter="all">
+							<i class="fas fa-list"></i>
+							Todos
+						</button>
+						<button
+							class="filter-btn"
+							data-filter="ECO">
+							<i class="fas fa-recycle"></i>
+							Ecopontos
+						</button>
+						<button
+							class="filter-btn"
+							data-filter="COO">
+							<i class="fas fa-handshake"></i>
+							Cooperativas
+						</button>
+						<button
+							class="filter-btn"
+							data-filter="PEV">
+							<i class="fas fa-box"></i>
+							PEVs
+						</button>
+						<button
+							class="add-partner-btn"
+							onclick="openAddPartnerModal()">
+							<i class="fas fa-plus"></i>
+							Adicionar Parceiro
+						</button>
+					</div>
+				</section>
+
 				<section class="partners-section">
 					<div class="partners-grid">
-						<!-- Os parceiros serão carregados aqui via JavaScript na próxima atividade -->
+						<!-- Os parceiros serão carregados aqui via JavaScript -->
 					</div>
 				</section>
 			</main>
 		</div>
 
 		<script src="admin.js"></script>
+		<script src="dashboard.js"></script>
 	</body>
 </html>
