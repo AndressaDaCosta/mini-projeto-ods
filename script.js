@@ -356,33 +356,133 @@ document.addEventListener('DOMContentLoaded', function () {
 	function showSuccessMessage(message) {
 		const successDiv = document.createElement('div');
 		successDiv.className = 'success-message';
-		successDiv.textContent = message;
+		successDiv.innerHTML = `
+			<div class="success-icon">
+				<i class="fas fa-check-circle"></i>
+			</div>
+			<div class="success-text">
+				<strong>Sucesso!</strong>
+				<p>${message}</p>
+			</div>
+			<button class="success-close" onclick="this.parentElement.remove()">
+				<i class="fas fa-times"></i>
+			</button>
+		`;
 		successDiv.style.cssText = `
             position: fixed;
             top: 20px;
             right: 20px;
-            background: var(--primary-color);
+            background: linear-gradient(135deg, #2ECC71, #27AE60);
             color: white;
-            padding: 1rem 2rem;
-            border-radius: 8px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            padding: 1rem 1.5rem;
+            border-radius: 12px;
+            box-shadow: 0 8px 25px rgba(46, 204, 113, 0.3);
             z-index: 9999;
             transform: translateX(100%);
-            transition: transform 0.3s ease;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            max-width: 350px;
+            min-width: 280px;
+            border: none;
+            font-family: 'Roboto', sans-serif;
         `;
+
+		// Estilos para os elementos internos
+		const iconStyle = successDiv.querySelector('.success-icon');
+		if (iconStyle) {
+			iconStyle.style.cssText = `
+				font-size: 1.5rem;
+				color: #fff;
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				min-width: 24px;
+			`;
+		}
+
+		const textStyle = successDiv.querySelector('.success-text');
+		if (textStyle) {
+			textStyle.style.cssText = `
+				flex: 1;
+				line-height: 1.4;
+			`;
+			const strongElement = textStyle.querySelector('strong');
+			if (strongElement) {
+				strongElement.style.cssText = `
+					font-size: 1rem;
+					font-weight: 600;
+					display: block;
+					margin-bottom: 0.25rem;
+				`;
+			}
+			const pElement = textStyle.querySelector('p');
+			if (pElement) {
+				pElement.style.cssText = `
+					font-size: 0.9rem;
+					margin: 0;
+					opacity: 0.95;
+					font-weight: 400;
+				`;
+			}
+		}
+
+		const closeButton = successDiv.querySelector('.success-close');
+		if (closeButton) {
+			closeButton.style.cssText = `
+				background: rgba(255, 255, 255, 0.2);
+				border: none;
+				border-radius: 50%;
+				width: 24px;
+				height: 24px;
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				cursor: pointer;
+				color: white;
+				font-size: 0.8rem;
+				transition: all 0.2s ease;
+				margin-left: 0.5rem;
+			`;
+			closeButton.addEventListener('mouseenter', function () {
+				this.style.background = 'rgba(255, 255, 255, 0.3)';
+				this.style.transform = 'scale(1.1)';
+			});
+			closeButton.addEventListener('mouseleave', function () {
+				this.style.background = 'rgba(255, 255, 255, 0.2)';
+				this.style.transform = 'scale(1)';
+			});
+		}
 
 		document.body.appendChild(successDiv);
 
+		// Animação de entrada
 		setTimeout(() => {
 			successDiv.style.transform = 'translateX(0)';
 		}, 10);
 
+		// Animação de saída automática
 		setTimeout(() => {
 			successDiv.style.transform = 'translateX(100%)';
+			successDiv.style.opacity = '0';
 			setTimeout(() => {
-				document.body.removeChild(successDiv);
-			}, 300);
-		}, 3000);
+				if (successDiv.parentNode) {
+					document.body.removeChild(successDiv);
+				}
+			}, 400);
+		}, 4000);
+
+		// Efeito de hover
+		successDiv.addEventListener('mouseenter', function () {
+			this.style.transform = 'translateX(0) scale(1.02)';
+			this.style.boxShadow = '0 12px 30px rgba(46, 204, 113, 0.4)';
+		});
+
+		successDiv.addEventListener('mouseleave', function () {
+			this.style.transform = 'translateX(0) scale(1)';
+			this.style.boxShadow = '0 8px 25px rgba(46, 204, 113, 0.3)';
+		});
 	}
 
 	// Funcionalidade do botão CTA principal
@@ -463,9 +563,8 @@ document.addEventListener('DOMContentLoaded', function () {
 			console.log('JSON API', JSON.stringify(partnerData));
 			console.log('Response:', response);
 			if (response.ok) {
-				window.alert('Dados enviados com sucesso!');
 				partnerForm.reset();
-				showSuccessNotification('Cadastro realizado com sucesso!');
+				showSuccessMessage('Cadastro realizado com sucesso!');
 			} else {
 				throw new Error('Erro ao enviar dados');
 			}
@@ -583,29 +682,6 @@ document.addEventListener('DOMContentLoaded', function () {
 	function isValidPhone(phone) {
 		const phoneRegex = /^[\d\s\-\(\)]+$/;
 		return phoneRegex.test(phone) && phone.replace(/\D/g, '').length >= 10;
-	}
-
-	// Função para mostrar notificação de sucesso
-	function showSuccessNotification(message) {
-		const notification = document.createElement('div');
-		notification.className = 'success-notification';
-		notification.innerHTML = `
-			<i class="fas fa-check-circle"></i>
-			<span>${message}</span>
-		`;
-
-		document.body.appendChild(notification);
-
-		setTimeout(() => {
-			notification.classList.add('show');
-		}, 10);
-
-		setTimeout(() => {
-			notification.classList.remove('show');
-			setTimeout(() => {
-				document.body.removeChild(notification);
-			}, 300);
-		}, 4000);
 	}
 
 	// Limpar erros quando o usuário começar a digitar
