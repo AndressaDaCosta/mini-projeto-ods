@@ -400,6 +400,25 @@ body {
 	color: var(--primary-color);
 }
 
+.admin-link {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.5rem;
+	padding: 0.5rem 1rem;
+	background: rgba(52, 152, 219, 0.1);
+	border-radius: 8px;
+	transition: var(--transition);
+}
+
+.admin-link:hover {
+	background: rgba(52, 152, 219, 0.2);
+	transform: translateY(-2px);
+}
+
+.admin-link i {
+	color: #3498db;
+}
+
 .partners-logos {
 	display: flex;
 	flex-direction: column;
@@ -607,7 +626,6 @@ body {
 .error-message.show {
 	display: block;
 }
-
 
 /* Responsive Design */
 @media (max-width: 768px) {
