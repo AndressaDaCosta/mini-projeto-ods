@@ -131,10 +131,19 @@ document.addEventListener('DOMContentLoaded', function () {
 					);
 					break;
 				case 'Seja Parceiro':
-					showModal(
-						'Parcerias',
-						'Interessado em ser parceiro? Entre em contato conosco através do e-mail: parceiros@ecojoinville.com.br'
-					);
+					// Redirecionar para o formulário
+					const formSection =
+						document.getElementById('cadastro-parceiro');
+					if (formSection) {
+						const headerHeight = header.offsetHeight;
+						const targetPosition =
+							formSection.offsetTop - headerHeight;
+
+						window.scrollTo({
+							top: targetPosition,
+							behavior: 'smooth'
+						});
+					}
 					break;
 				default:
 					break;
@@ -293,6 +302,26 @@ document.addEventListener('DOMContentLoaded', function () {
 		setTimeout(typeWriter, 500);
 	}
 
+	// Contador animado para estatísticas (pode ser expandido no futuro)
+	function animateCounter(element, target, duration = 2000) {
+		const start = 0;
+		const startTime = Date.now();
+
+		function update() {
+			const elapsed = Date.now() - startTime;
+			const progress = Math.min(elapsed / duration, 1);
+			const current = Math.floor(progress * target);
+
+			element.textContent = current;
+
+			if (progress < 1) {
+				requestAnimationFrame(update);
+			}
+		}
+
+		update();
+	}
+
 	window.addEventListener('scroll', function () {
 		const scrolled = window.pageYOffset;
 		const heroImage = document.querySelector('.hero-image img');
@@ -323,6 +352,39 @@ document.addEventListener('DOMContentLoaded', function () {
 
 	images.forEach((img) => imageObserver.observe(img));
 
+	// Feedback visual para formulários futuros
+	function showSuccessMessage(message) {
+		const successDiv = document.createElement('div');
+		successDiv.className = 'success-message';
+		successDiv.textContent = message;
+		successDiv.style.cssText = `
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: var(--primary-color);
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            z-index: 9999;
+            transform: translateX(100%);
+            transition: transform 0.3s ease;
+        `;
+
+		document.body.appendChild(successDiv);
+
+		setTimeout(() => {
+			successDiv.style.transform = 'translateX(0)';
+		}, 10);
+
+		setTimeout(() => {
+			successDiv.style.transform = 'translateX(100%)';
+			setTimeout(() => {
+				document.body.removeChild(successDiv);
+			}, 300);
+		}, 3000);
+	}
+
 	// Funcionalidade do botão CTA principal
 	const ctaButton = document.querySelector('.cta-button');
 	if (ctaButton) {
@@ -338,6 +400,240 @@ document.addEventListener('DOMContentLoaded', function () {
 					behavior: 'smooth'
 				});
 			}
+		});
+	}
+
+	// Funcionalidade do formulário de parceiro
+	const partnerForm = document.getElementById('partnerForm');
+	if (partnerForm) {
+		partnerForm.addEventListener('submit', handlePartnerFormSubmit);
+	}
+
+	// Função para manipular o envio do formulário
+	async function handlePartnerFormSubmit(event) {
+		event.preventDefault();
+
+		const submitButton = document.querySelector('.submit-button');
+		const formData = new FormData(event.target);
+
+		// Validar campos obrigatórios
+		if (!validateForm(formData)) {
+			return;
+		}
+
+		// Preparar dados para envio
+		const partnerData = {
+			nomeParceiro: formData.get('nomeParceiro'),
+			tipoParceiro: formData.get('tipoParceiro'),
+			responsavelParceiro: formData.get('responsavelParceiro'),
+			telResponsavel: formData.get('telResponsavel'),
+			emailResponsavel: formData.get('emailResponsavel'),
+			rua: formData.get('rua'),
+			numero: parseInt(formData.get('numero')),
+			bairro: formData.get('bairro'),
+			papel: formData.has('papel'),
+			plastico: formData.has('plastico'),
+			vidro: formData.has('vidro'),
+			metal: formData.has('metal'),
+			oleoCozinha: formData.has('oleoCozinha'),
+			pilhaBateria: formData.has('pilhaBateria'),
+			eletronico: formData.has('eletronico'),
+			roupa: formData.has('roupa'),
+			outros: formData.has('outros')
+		};
+
+		// Mostrar estado de carregamento
+		submitButton.disabled = true;
+		submitButton.classList.add('loading');
+		submitButton.innerHTML =
+			'<i class="fas fa-spinner fa-spin"></i> Enviando...';
+
+		try {
+			// Enviar dados para a API
+			const response = await fetch(
+				'https://6860899b8e74864084437167.mockapi.io/jmt-futurodev/api/parceiros',
+				{
+					method: 'POST',
+					headers: {
+						'Content-Type': 'application/json'
+					},
+					body: JSON.stringify(partnerData)
+				}
+			);
+			console.log('JSON API', JSON.stringify(partnerData));
+			console.log('Response:', response);
+			if (response.ok) {
+				window.alert('Dados enviados com sucesso!');
+				partnerForm.reset();
+				showSuccessNotification('Cadastro realizado com sucesso!');
+			} else {
+				throw new Error('Erro ao enviar dados');
+			}
+		} catch (error) {
+			console.error('Erro ao enviar formulário:', error);
+			window.alert('Erro ao enviar dados. Tente novamente.');
+		} finally {
+			submitButton.disabled = false;
+			submitButton.classList.remove('loading');
+			submitButton.innerHTML =
+				'<i class="fas fa-paper-plane"></i> Enviar Cadastro';
+		}
+	}
+
+	// Função para validar formulário
+	function validateForm(formData) {
+		const requiredFields = [
+			'nomeParceiro',
+			'tipoParceiro',
+			'responsavelParceiro',
+			'telResponsavel',
+			'emailResponsavel',
+			'rua',
+			'numero',
+			'bairro'
+		];
+
+		let isValid = true;
+
+		// Limpar erros anteriores
+		document
+			.querySelectorAll('.error')
+			.forEach((el) => el.classList.remove('error'));
+		document
+			.querySelectorAll('.error-message')
+			.forEach((el) => el.classList.remove('show'));
+
+		// Validar campos obrigatórios
+		requiredFields.forEach((field) => {
+			const value = formData.get(field);
+			const input = document.getElementById(field);
+
+			if (!value || value.trim() === '') {
+				showFieldError(input, 'Este campo é obrigatório');
+				isValid = false;
+			}
+		});
+
+		// Validar email
+		const email = formData.get('emailResponsavel');
+		const emailInput = document.getElementById('emailResponsavel');
+		if (email && !isValidEmail(email)) {
+			showFieldError(emailInput, 'Por favor, insira um email válido');
+			isValid = false;
+		}
+
+		// Validar telefone
+		const phone = formData.get('telResponsavel');
+		const phoneInput = document.getElementById('telResponsavel');
+		if (phone && !isValidPhone(phone)) {
+			showFieldError(phoneInput, 'Por favor, insira um telefone válido');
+			isValid = false;
+		}
+
+		// Validar se pelo menos um tipo de resíduo foi selecionado
+		const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+		const hasCheckedBox = Array.from(checkboxes).some((cb) => cb.checked);
+
+		if (!hasCheckedBox) {
+			showGeneralError('Selecione pelo menos um tipo de resíduo aceito');
+			isValid = false;
+		}
+
+		return isValid;
+	}
+
+	// Função para mostrar erro em campo específico
+	function showFieldError(input, message) {
+		input.classList.add('error');
+
+		let errorElement = input.parentNode.querySelector('.error-message');
+		if (!errorElement) {
+			errorElement = document.createElement('div');
+			errorElement.className = 'error-message';
+			input.parentNode.appendChild(errorElement);
+		}
+
+		errorElement.textContent = message;
+		errorElement.classList.add('show');
+	}
+
+	// Função para mostrar erro geral
+	function showGeneralError(message) {
+		const checkboxGroup = document.querySelector('.checkbox-group');
+		let errorElement =
+			checkboxGroup.parentNode.querySelector('.error-message');
+
+		if (!errorElement) {
+			errorElement = document.createElement('div');
+			errorElement.className = 'error-message';
+			checkboxGroup.parentNode.appendChild(errorElement);
+		}
+
+		errorElement.textContent = message;
+		errorElement.classList.add('show');
+	}
+
+	// Função para validar email
+	function isValidEmail(email) {
+		const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+		return emailRegex.test(email);
+	}
+
+	// Função para validar telefone
+	function isValidPhone(phone) {
+		const phoneRegex = /^[\d\s\-\(\)]+$/;
+		return phoneRegex.test(phone) && phone.replace(/\D/g, '').length >= 10;
+	}
+
+	// Função para mostrar notificação de sucesso
+	function showSuccessNotification(message) {
+		const notification = document.createElement('div');
+		notification.className = 'success-notification';
+		notification.innerHTML = `
+			<i class="fas fa-check-circle"></i>
+			<span>${message}</span>
+		`;
+
+		document.body.appendChild(notification);
+
+		setTimeout(() => {
+			notification.classList.add('show');
+		}, 10);
+
+		setTimeout(() => {
+			notification.classList.remove('show');
+			setTimeout(() => {
+				document.body.removeChild(notification);
+			}, 300);
+		}, 4000);
+	}
+
+	// Limpar erros quando o usuário começar a digitar
+	document.addEventListener('input', function (e) {
+		if (e.target.matches('input, select')) {
+			e.target.classList.remove('error');
+			const errorMessage =
+				e.target.parentNode.querySelector('.error-message');
+			if (errorMessage) {
+				errorMessage.classList.remove('show');
+			}
+		}
+	});
+
+	// Máscara para telefone
+	const phoneInput = document.getElementById('telResponsavel');
+	if (phoneInput) {
+		phoneInput.addEventListener('input', function (e) {
+			let value = e.target.value.replace(/\D/g, '');
+
+			if (value.length <= 11) {
+				value = value.replace(/^(\d{2})(\d{5})(\d{4})$/, '($1) $2-$3');
+				value = value.replace(/^(\d{2})(\d{4})(\d{4})$/, '($1) $2-$3');
+				value = value.replace(/^(\d{2})(\d{1,5})$/, '($1) $2');
+				value = value.replace(/^(\d{1,2})$/, '($1');
+			}
+
+			e.target.value = value;
 		});
 	}
 

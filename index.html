@@ -236,6 +236,199 @@
 			</div>
 		</section>
 
+		<!-- Formulário de Cadastro de Parceiro -->
+		<section
+			id="cadastro-parceiro"
+			class="partner-form-section">
+			<div class="container">
+				<h2 class="section-title">Cadastre-se como Parceiro</h2>
+				<div class="form-container">
+					<form
+						id="partnerForm"
+						class="partner-form">
+						<div class="form-group">
+							<label for="nomeParceiro">Nome do Parceiro*</label>
+							<input
+								type="text"
+								id="nomeParceiro"
+								name="nomeParceiro"
+								required />
+						</div>
+
+						<div class="form-group">
+							<label for="tipoParceiro">Tipo do Parceiro*</label>
+							<select
+								id="tipoParceiro"
+								name="tipoParceiro"
+								required>
+								<option value="">Selecione o tipo</option>
+								<option value="ECO">Ecopontos</option>
+								<option value="COO">Cooperativas</option>
+								<option value="PEV">
+									Ponto de Entrega Voluntária
+								</option>
+							</select>
+						</div>
+
+						<div class="form-group">
+							<label for="responsavelParceiro"
+								>Responsável pelo Parceiro*</label
+							>
+							<input
+								type="text"
+								id="responsavelParceiro"
+								name="responsavelParceiro"
+								required />
+						</div>
+
+						<div class="form-row">
+							<div class="form-group">
+								<label for="telResponsavel"
+									>Telefone do Responsável*</label
+								>
+								<input
+									type="tel"
+									id="telResponsavel"
+									name="telResponsavel"
+									required />
+							</div>
+
+							<div class="form-group">
+								<label for="emailResponsavel"
+									>E-mail do Responsável*</label
+								>
+								<input
+									type="email"
+									id="emailResponsavel"
+									name="emailResponsavel"
+									required />
+							</div>
+						</div>
+
+						<h3 class="form-section-title">Endereço</h3>
+
+						<div class="form-row">
+							<div class="form-group form-group-large">
+								<label for="rua">Rua*</label>
+								<input
+									type="text"
+									id="rua"
+									name="rua"
+									required />
+							</div>
+
+							<div class="form-group form-group-small">
+								<label for="numero">Número*</label>
+								<input
+									type="number"
+									id="numero"
+									name="numero"
+									required />
+							</div>
+						</div>
+
+						<div class="form-group">
+							<label for="bairro">Bairro*</label>
+							<input
+								type="text"
+								id="bairro"
+								name="bairro"
+								required />
+						</div>
+
+						<h3 class="form-section-title">
+							Tipos de Resíduos Aceitos
+						</h3>
+
+						<div class="checkbox-group">
+							<div class="checkbox-item">
+								<input
+									type="checkbox"
+									id="papel"
+									name="papel" />
+								<label for="papel">Papel</label>
+							</div>
+
+							<div class="checkbox-item">
+								<input
+									type="checkbox"
+									id="plastico"
+									name="plastico" />
+								<label for="plastico">Plástico</label>
+							</div>
+
+							<div class="checkbox-item">
+								<input
+									type="checkbox"
+									id="vidro"
+									name="vidro" />
+								<label for="vidro">Vidro</label>
+							</div>
+
+							<div class="checkbox-item">
+								<input
+									type="checkbox"
+									id="metal"
+									name="metal" />
+								<label for="metal">Metal</label>
+							</div>
+
+							<div class="checkbox-item">
+								<input
+									type="checkbox"
+									id="oleoCozinha"
+									name="oleoCozinha" />
+								<label for="oleoCozinha">Óleo de Cozinha</label>
+							</div>
+
+							<div class="checkbox-item">
+								<input
+									type="checkbox"
+									id="pilhaBateria"
+									name="pilhaBateria" />
+								<label for="pilhaBateria"
+									>Pilhas e Baterias</label
+								>
+							</div>
+
+							<div class="checkbox-item">
+								<input
+									type="checkbox"
+									id="eletronico"
+									name="eletronico" />
+								<label for="eletronico">Eletrônicos</label>
+							</div>
+
+							<div class="checkbox-item">
+								<input
+									type="checkbox"
+									id="roupa"
+									name="roupa" />
+								<label for="roupa">Roupas</label>
+							</div>
+
+							<div class="checkbox-item">
+								<input
+									type="checkbox"
+									id="outros"
+									name="outros" />
+								<label for="outros">Outros</label>
+							</div>
+						</div>
+
+						<div class="form-actions">
+							<button
+								type="submit"
+								class="submit-button">
+								<i class="fas fa-paper-plane"></i>
+								Enviar Cadastro
+							</button>
+						</div>
+					</form>
+				</div>
+			</div>
+		</section>
+
 		<!-- Footer -->
 		<footer class="footer">
 			<div class="container">
