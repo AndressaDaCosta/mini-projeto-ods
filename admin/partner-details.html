@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+	<head>
+		<meta charset="UTF-8" />
+		<meta
+			name="viewport"
+			content="width=device-width, initial-scale=1.0" />
+		<title>Detalhes do Parceiro - EcoJoinville Admin</title>
+		<link
+			rel="stylesheet"
+			href="admin.css" />
+		<link
+			href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap"
+			rel="stylesheet" />
+		<link
+			rel="stylesheet"
+			href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+	</head>
+	<body>
+		<div class="dashboard-container-details">
+			<header class="dashboard-header">
+				<div class="container">
+					<div class="dashboard-title">
+						<i class="fas fa-info-circle"></i>
+						<h1>Detalhes do Parceiro</h1>
+					</div>
+					<div class="user-info">
+						<span class="user-email"></span>
+						<button class="logout-btn">
+							<i class="fas fa-sign-out-alt"></i>
+							Sair
+						</button>
+					</div>
+				</div>
+			</header>
+
+			<main class="dashboard-content">
+				<div class="navigation-breadcrumb">
+					<a
+						href="dashboard.html"
+						class="breadcrumb-link">
+						<i class="fas fa-arrow-left"></i>
+						Voltar ao Dashboard
+					</a>
+				</div>
+
+				<section class="partner-details-section">
+					<div class="partner-details-container">
+						<div
+							class="loading-container"
+							id="loadingContainer">
+							<div class="loading-spinner"></div>
+							<p>Carregando dados do parceiro...</p>
+						</div>
+
+						<div
+							class="partner-details-content"
+							id="partnerDetailsContent"
+							style="display: none">
+							<div class="partner-header-details">
+								<div
+									class="partner-avatar-large"
+									id="partnerAvatar">
+									<i class="fas fa-recycle"></i>
+								</div>
+								<div class="partner-title-info">
+									<h2
+										class="partner-name-large"
+										id="partnerName">
+										Nome do Parceiro
+									</h2>
+									<span
+										class="partner-type-large"
+										id="partnerType"
+										>Tipo</span
+									>
+									<p class="partner-status">
+										<i class="fas fa-check-circle"></i>
+										Status: Ativo
+									</p>
+								</div>
+							</div>
+
+							<div class="details-grid">
+								<div class="detail-card">
+									<h3>
+										<i class="fas fa-user"></i> Informações
+										de Contato
+									</h3>
+									<div class="detail-content">
+										<p>
+											<strong>Responsável:</strong>
+											<span id="responsibleName">-</span>
+										</p>
+										<p>
+											<strong>Telefone:</strong>
+											<span id="responsiblePhone">-</span>
+										</p>
+										<p>
+											<strong>Email:</strong>
+											<span id="responsibleEmail">-</span>
+										</p>
+									</div>
+								</div>
+
+								<div class="detail-card">
+									<h3>
+										<i class="fas fa-map-marker-alt"></i>
+										Endereço
+									</h3>
+									<div class="detail-content">
+										<p>
+											<strong>Rua:</strong>
+											<span id="street">-</span>
+										</p>
+										<p>
+											<strong>Número:</strong>
+											<span id="number">-</span>
+										</p>
+										<p>
+											<strong>Bairro:</strong>
+											<span id="neighborhood">-</span>
+										</p>
+										<p>
+											<strong>Cidade:</strong>
+											<span id="city">-</span>
+										</p>
+										<p>
+											<strong>Estado:</strong>
+											<span id="state">-</span>
+										</p>
+										<p>
+											<strong>CEP:</strong>
+											<span id="zipCode">-</span>
+										</p>
+									</div>
+								</div>
+
+								<div class="detail-card">
+									<h3>
+										<i class="fas fa-calendar-plus"></i>
+										Dados de Cadastro
+									</h3>
+									<div class="detail-content">
+										<p>
+											<strong>Data de Cadastro:</strong>
+											<span id="createdDate">-</span>
+										</p>
+										<p>
+											<strong>Última Atualização:</strong>
+											<span id="updatedDate">-</span>
+										</p>
+										<p>
+											<strong>ID do Parceiro:</strong>
+											<span id="partnerId">-</span>
+										</p>
+									</div>
+								</div>
+
+								<div class="detail-card waste-types-card">
+									<h3>
+										<i class="fas fa-recycle"></i> Resíduos
+										Aceitos
+									</h3>
+									<div class="detail-content">
+										<div
+											class="waste-types-grid"
+											id="wasteTypesGrid">
+											<!-- Tipos de resíduos serão carregados aqui -->
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+
+						<div
+							class="error-container"
+							id="errorContainer"
+							style="display: none">
+							<div class="error-message">
+								<i class="fas fa-exclamation-triangle"></i>
+								<h3>Erro ao carregar dados</h3>
+								<p>
+									Não foi possível carregar os dados do
+									parceiro. Tente novamente.
+								</p>
+								<button
+									onclick="loadPartnerDetails()"
+									class="retry-button">
+									<i class="fas fa-redo"></i>
+									Tentar Novamente
+								</button>
+							</div>
+						</div>
+					</div>
+				</section>
+			</main>
+		</div>
+
+		<script src="admin.js"></script>
+		<script src="partner-details.js"></script>
+	</body>
+</html>
