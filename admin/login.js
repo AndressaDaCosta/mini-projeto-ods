@@ -27,14 +27,24 @@ function initializeLogin() {
 		const email = emailInput.value.trim();
 		const password = passwordInput.value.trim();
 
-		// Habilitar/desabilitar botão baseado no preenchimento dos campos
-		if (email && password) {
+		// Validação visual do email
+		validateEmail(email);
+
+		// Validação visual da senha com requisitos detalhados
+		validatePassword(password);
+
+		// Habilitar/desabilitar botão baseado na validação completa
+		const emailValid = email && isValidEmail(email);
+		const passwordValid = password && isPasswordValid(password);
+
+		if (emailValid && passwordValid) {
 			loginButton.disabled = false;
 		} else {
 			loginButton.disabled = true;
 		}
+	}
 
-		// Validação visual do email
+	function validateEmail(email) {
 		if (email) {
 			if (isValidEmail(email)) {
 				emailInput.classList.remove('error');
@@ -44,10 +54,53 @@ function initializeLogin() {
 				emailInput.classList.remove('success');
 			}
 		} else {
-			emailInput.classList.remove('error', 'success');
+			// Campo vazio - mostrar erro já que é obrigatório
+			emailInput.classList.add('error');
+			emailInput.classList.remove('success');
+		}
+	}
+
+	function validatePassword(password) {
+		// Criar ou atualizar lista de requisitos
+		let requirementsList = document.getElementById('passwordRequirements');
+		if (!requirementsList) {
+			requirementsList = createPasswordRequirementsList();
 		}
 
-		// Validação visual da senha
+		// Verificar cada requisito (mais simples para demo)
+		const requirements = {
+			length: password.length >= 3, // Mais simples para demonstração
+			hasContent: password.length > 0
+		};
+
+		// Atualizar visual dos requisitos
+		updateRequirementItem(
+			'req-length',
+			requirements.length,
+			'Mínimo de 3 caracteres'
+		);
+		updateRequirementItem(
+			'req-uppercase',
+			password.length >= 6,
+			'Pelo menos 6 caracteres (recomendado)'
+		);
+		updateRequirementItem(
+			'req-lowercase',
+			/[a-z]/.test(password),
+			'Pelo menos uma letra minúscula'
+		);
+		updateRequirementItem(
+			'req-number',
+			/[0-9]/.test(password),
+			'Pelo menos um número'
+		);
+		updateRequirementItem(
+			'req-special',
+			/[@#$%&*!?]/.test(password),
+			'Pelo menos um caractere especial (@, #, $, %, etc)'
+		);
+
+		// Validação visual do input (mais simples)
 		if (password) {
 			if (password.length >= 3) {
 				passwordInput.classList.remove('error');
@@ -57,13 +110,92 @@ function initializeLogin() {
 				passwordInput.classList.remove('success');
 			}
 		} else {
-			passwordInput.classList.remove('error', 'success');
+			// Campo vazio - mostrar erro já que é obrigatório
+			passwordInput.classList.add('error');
+			passwordInput.classList.remove('success');
 		}
 	}
 
+	function isPasswordValid(password) {
+		// Validação mais simples 
+		return password.length >= 3;
+	}
+
+	// Função utilitária para validar email
+	function isValidEmail(email) {
+		const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+		return emailRegex.test(email);
+	}
+
+	function createPasswordRequirementsList() {
+		const requirementsList = document.createElement('div');
+		requirementsList.id = 'passwordRequirements';
+		requirementsList.className = 'password-requirements';
+		requirementsList.innerHTML = `
+        <div class="requirement-item" id="req-length">
+            <i class="fas fa-times requirement-icon"></i>
+            <span>Mínimo de 8 caracteres</span>
+        </div>
+        <div class="requirement-item" id="req-uppercase">
+            <i class="fas fa-times requirement-icon"></i>
+            <span>Pelo menos uma letra maiúscula</span>
+        </div>
+        <div class="requirement-item" id="req-lowercase">
+            <i class="fas fa-times requirement-icon"></i>
+            <span>Pelo menos uma letra minúscula</span>
+        </div>
+        <div class="requirement-item" id="req-number">
+            <i class="fas fa-times requirement-icon"></i>
+            <span>Pelo menos um número</span>
+        </div>
+        <div class="requirement-item" id="req-special">
+            <i class="fas fa-times requirement-icon"></i>
+            <span>Pelo menos um caractere especial (@, #, $, %, etc)</span>
+        </div>
+    `;
+
+		// Inserir após o campo de senha
+		passwordInput.parentNode.insertBefore(
+			requirementsList,
+			passwordInput.nextSibling
+		);
+		return requirementsList;
+	}
+
+	function updateRequirementItem(itemId, isValid, text) {
+		const item = document.getElementById(itemId);
+		if (!item) return;
+
+		const icon = item.querySelector('.requirement-icon');
+		const span = item.querySelector('span');
+
+		if (isValid) {
+			item.classList.remove('invalid');
+			item.classList.add('valid');
+			icon.className = 'fas fa-check requirement-icon';
+			span.textContent = text;
+		} else {
+			item.classList.remove('valid');
+			item.classList.add('invalid');
+			icon.className = 'fas fa-times requirement-icon';
+			span.textContent = text;
+		}
+	}
 	// Event listeners para validação em tempo real
 	emailInput.addEventListener('input', validateFields);
 	passwordInput.addEventListener('input', validateFields);
+	emailInput.addEventListener('blur', validateFields);
+	passwordInput.addEventListener('blur', validateFields);
+
+	// Validação inicial para mostrar campos obrigatórios como erro
+	function initialValidation() {
+		emailInput.classList.add('error');
+		passwordInput.classList.add('error');
+		loginButton.disabled = true;
+	}
+
+	// Executar validação inicial
+	initialValidation();
 
 	// Submissão do formulário
 	loginForm.addEventListener('submit', function (e) {
@@ -77,7 +209,7 @@ function initializeLogin() {
 		const password = passwordInput.value.trim();
 
 		// Validações básicas
-		if (!email || !password) {
+		if (!email || !password || email.length === 0 || password.length < 3) {
 			showError('Por favor, preencha todos os campos');
 			return;
 		}
@@ -90,7 +222,8 @@ function initializeLogin() {
 		// Mostrar estado de carregamento
 		loginButton.disabled = true;
 		loginButton.classList.add('loading');
-		loginButton.innerHTML = 'Entrando..';
+		loginButton.innerHTML =
+			'<span style="color: white;">Entrando...</span>';
 
 		// Simular delay de login (em projeto real seria uma chamada à API)
 		setTimeout(() => {
