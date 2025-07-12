@@ -14,7 +14,7 @@
 			rel="stylesheet" />
 		<link
 			rel="stylesheet"
-			href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
+			href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
 	</head>
 	<body>
 		<!-- Cabeçalho -->
@@ -135,7 +135,9 @@
 			id="impacto"
 			class="impact">
 			<div class="container">
-				<h2 class="section-title">Impacto na Comunidade</h2>
+				<h2 class="section-title accent-title">
+					Impacto na Comunidade
+				</h2>
 				<div class="impact-grid">
 					<div class="impact-item">
 						<div class="impact-icon">
@@ -199,7 +201,7 @@
 				<div class="actions-grid">
 					<div class="action-card">
 						<div class="action-icon">
-							<i class="fas fa-hands-helping"></i>
+							<i class="fas fa-recycle"></i>
 						</div>
 						<h3>Doe seus Recicláveis</h3>
 						<p>
@@ -252,22 +254,55 @@
 								type="text"
 								id="nomeParceiro"
 								name="nomeParceiro"
+								placeholder="Ex: Ecoponto Central, Cooperativa Verde, etc."
+								maxlength="100"
+								title="Nome do parceiro ou organização"
 								required />
 						</div>
-
 						<div class="form-group">
 							<label for="tipoParceiro">Tipo do Parceiro*</label>
-							<select
-								id="tipoParceiro"
-								name="tipoParceiro"
-								required>
-								<option value="">Selecione o tipo</option>
-								<option value="ECO">Ecopontos</option>
-								<option value="COO">Cooperativas</option>
-								<option value="PEV">
-									Ponto de Entrega Voluntária
-								</option>
-							</select>
+							<div class="custom-select-container">
+								<div
+									class="custom-select-header"
+									id="customSelectHeader">
+									<span
+										class="selected-option"
+										id="selectedOption"
+										>Selecione o tipo</span
+									>
+									<i
+										class="fas fa-chevron-down dropdown-arrow"></i>
+								</div>
+
+								<div
+									class="custom-select-dropdown"
+									id="customSelectDropdown">
+									<div
+										class="custom-option"
+										data-value="ECO">
+										<i class="fas fa-recycle"></i>
+										<span>Ecopontos</span>
+									</div>
+									<div
+										class="custom-option"
+										data-value="COO">
+										<i class="fas fa-handshake"></i>
+										<span>Cooperativas</span>
+									</div>
+									<div
+										class="custom-option"
+										data-value="PEV">
+										<i class="fas fa-box"></i>
+										<span>Ponto de Entrega Voluntária</span>
+									</div>
+								</div>
+
+								<input
+									type="hidden"
+									id="tipoParceiro"
+									name="tipoParceiro"
+									required />
+							</div>
 						</div>
 
 						<div class="form-group">
@@ -278,6 +313,9 @@
 								type="text"
 								id="responsavelParceiro"
 								name="responsavelParceiro"
+								placeholder="Nome completo do responsável"
+								maxlength="80"
+								title="Nome completo da pessoa responsável"
 								required />
 						</div>
 
@@ -290,6 +328,9 @@
 									type="tel"
 									id="telResponsavel"
 									name="telResponsavel"
+									placeholder="(47) 99999-9999"
+									pattern="[0-9\s\(\)\-]{10,15}"
+									title="Insira um telefone válido"
 									required />
 							</div>
 
@@ -301,6 +342,8 @@
 									type="email"
 									id="emailResponsavel"
 									name="emailResponsavel"
+									placeholder="exemplo@email.com"
+									title="Insira um email válido"
 									required />
 							</div>
 						</div>
@@ -309,11 +352,24 @@
 
 						<div class="form-row">
 							<div class="form-group form-group-large">
+								<label for="numero">CEP*</label>
+								<input
+									type="text"
+									id="cep"
+									name="cep"
+									placeholder="Ex: 12345-678"
+									title="Insira um CEP válido"
+									required />
+							</div>
+							<div class="form-group form-group-large">
 								<label for="rua">Rua*</label>
 								<input
 									type="text"
 									id="rua"
 									name="rua"
+									placeholder="Ex: Rua das Flores, Avenida Brasil"
+									maxlength="80"
+									title="Nome da rua ou avenida"
 									required />
 							</div>
 
@@ -323,6 +379,10 @@
 									type="number"
 									id="numero"
 									name="numero"
+									placeholder="Ex: 123"
+									min="1"
+									max="99999"
+									title="Insira um número válido"
 									required />
 							</div>
 						</div>
@@ -333,6 +393,9 @@
 								type="text"
 								id="bairro"
 								name="bairro"
+								placeholder="Ex: Centro, Jardim Paraíso"
+								maxlength="50"
+								title="Nome do bairro"
 								required />
 						</div>
 
@@ -346,7 +409,10 @@
 									type="checkbox"
 									id="papel"
 									name="papel" />
-								<label for="papel">Papel</label>
+								<label for="papel">
+									<i class="fas fa-file-alt"></i>
+									Papel
+								</label>
 							</div>
 
 							<div class="checkbox-item">
@@ -354,7 +420,10 @@
 									type="checkbox"
 									id="plastico"
 									name="plastico" />
-								<label for="plastico">Plástico</label>
+								<label for="plastico">
+									<i class="fas fa-bottle-water"></i>
+									Plástico
+								</label>
 							</div>
 
 							<div class="checkbox-item">
@@ -362,7 +431,10 @@
 									type="checkbox"
 									id="vidro"
 									name="vidro" />
-								<label for="vidro">Vidro</label>
+								<label for="vidro">
+									<i class="fas fa-wine-bottle"></i>
+									Vidro
+								</label>
 							</div>
 
 							<div class="checkbox-item">
@@ -370,7 +442,10 @@
 									type="checkbox"
 									id="metal"
 									name="metal" />
-								<label for="metal">Metal</label>
+								<label for="metal">
+									<i class="fas fa-cog"></i>
+									Metal
+								</label>
 							</div>
 
 							<div class="checkbox-item">
@@ -378,7 +453,10 @@
 									type="checkbox"
 									id="oleoCozinha"
 									name="oleoCozinha" />
-								<label for="oleoCozinha">Óleo de Cozinha</label>
+								<label for="oleoCozinha">
+									<i class="fas fa-tint"></i>
+									Óleo de Cozinha
+								</label>
 							</div>
 
 							<div class="checkbox-item">
@@ -386,9 +464,10 @@
 									type="checkbox"
 									id="pilhaBateria"
 									name="pilhaBateria" />
-								<label for="pilhaBateria"
-									>Pilhas e Baterias</label
-								>
+								<label for="pilhaBateria">
+									<i class="fas fa-battery-half"></i>
+									Pilhas e Baterias
+								</label>
 							</div>
 
 							<div class="checkbox-item">
@@ -396,7 +475,10 @@
 									type="checkbox"
 									id="eletronico"
 									name="eletronico" />
-								<label for="eletronico">Eletrônicos</label>
+								<label for="eletronico">
+									<i class="fas fa-laptop"></i>
+									Eletrônicos
+								</label>
 							</div>
 
 							<div class="checkbox-item">
@@ -404,7 +486,10 @@
 									type="checkbox"
 									id="roupa"
 									name="roupa" />
-								<label for="roupa">Roupas</label>
+								<label for="roupa">
+									<i class="fas fa-tshirt"></i>
+									Roupas
+								</label>
 							</div>
 
 							<div class="checkbox-item">
@@ -412,7 +497,10 @@
 									type="checkbox"
 									id="outros"
 									name="outros" />
-								<label for="outros">Outros</label>
+								<label for="outros">
+									<i class="fas fa-ellipsis-h"></i>
+									Outros
+								</label>
 							</div>
 						</div>
 
@@ -435,7 +523,12 @@
 				<div class="footer-content">
 					<div class="footer-section">
 						<h3>Participantes do Projeto</h3>
-						<p>Andressa Costa</p>
+						<a
+							href="https://github.com/AndressaDaCosta"
+							target="_blank"
+							rel="noopener noreferrer">
+							Andressa Da Costa
+						</a>
 					</div>
 					<div class="footer-section">
 						<h3>ODS da ONU</h3>
@@ -456,7 +549,7 @@
 									target="_blank"
 									rel="noopener noreferrer">
 									<img
-										src="assets/images/logo-prefeitura-jlle-cinza.png"
+										src="assets/images/logo-prefeitura-jlle-white.png"
 										alt="Prefeitura de Joinville"
 										class="partner-logo-img" />
 								</a>
@@ -467,7 +560,7 @@
 									target="_blank"
 									rel="noopener noreferrer">
 									<img
-										src="assets/images/logo-lab365-cinza.png"
+										src="assets/images/logo-lab365-white.png"
 										alt="Lab365"
 										class="partner-logo-img" />
 								</a>
@@ -478,7 +571,7 @@
 									target="_blank"
 									rel="noopener noreferrer">
 									<img
-										src="assets/images/logo-senai-cinza.png"
+										src="assets/images/logo-senai-white.png"
 										alt="SENAI"
 										class="partner-logo-img" />
 								</a>
