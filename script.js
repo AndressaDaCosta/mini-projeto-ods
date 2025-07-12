@@ -331,6 +331,46 @@ document.addEventListener('DOMContentLoaded', function () {
 			heroImage.style.transform = `translateY(${scrolled * speed}px)`;
 		}
 	});
+	// resolvido bug de imagem ultrapassando hero com Efeito parallax suave para a imagem hero (apenas desktop)
+	const heroImage = document.querySelector('.hero-image img');
+
+	if (heroImage && window.innerWidth > 768) {
+		let ticking = false;
+
+		function updateParallax() {
+			const scrollTop = window.pageYOffset;
+			const heroSection = document.querySelector('.hero');
+
+			if (heroSection) {
+				const heroHeight = heroSection.offsetHeight;
+				const heroTop = heroSection.offsetTop;
+
+				// Calcular se estamos na área do hero
+				if (
+					scrollTop >= heroTop - window.innerHeight &&
+					scrollTop <= heroTop + heroHeight
+				) {
+					const parallaxValue = (scrollTop - heroTop) * 0.15;
+					heroImage.style.transform = `translateY(${parallaxValue}px) translateZ(0)`;
+				}
+			}
+			ticking = false;
+		}
+
+		window.addEventListener('scroll', function () {
+			if (!ticking && window.innerWidth > 768) {
+				requestAnimationFrame(updateParallax);
+				ticking = true;
+			}
+		});
+
+		// Resetar em resize para mobile
+		window.addEventListener('resize', function () {
+			if (window.innerWidth <= 768) {
+				heroImage.style.transform = 'none';
+			}
+		});
+	}
 
 	// Preloader (opcional)
 	window.addEventListener('load', function () {
@@ -545,8 +585,7 @@ document.addEventListener('DOMContentLoaded', function () {
 		// Mostrar estado de carregamento
 		submitButton.disabled = true;
 		submitButton.classList.add('loading');
-		submitButton.innerHTML =
-			'<i class="fas fa-spinner fa-spin"></i> Enviando...';
+		submitButton.innerHTML = 'Enviando...';
 
 		try {
 			// Enviar dados para a API
@@ -561,7 +600,7 @@ document.addEventListener('DOMContentLoaded', function () {
 				}
 			);
 			console.log('JSON API', JSON.stringify(partnerData));
-			console.log('Response:', response);
+			console.log('Response POST create parceiros :', response);
 			if (response.ok) {
 				partnerForm.reset();
 				showSuccessMessage('Cadastro realizado com sucesso!');
@@ -710,6 +749,54 @@ document.addEventListener('DOMContentLoaded', function () {
 			}
 
 			e.target.value = value;
+		});
+	}
+
+	// Custom Select Functionality
+	const customSelectHeader = document.getElementById('customSelectHeader');
+	const customSelectDropdown = document.getElementById(
+		'customSelectDropdown'
+	);
+	const selectedOption = document.getElementById('selectedOption');
+	const hiddenInput = document.getElementById('tipoParceiro');
+	const customOptions = document.querySelectorAll('.custom-option');
+
+	if (customSelectHeader && customSelectDropdown) {
+		// Toggle dropdown
+		customSelectHeader.addEventListener('click', function (e) {
+			e.stopPropagation();
+			customSelectHeader.classList.toggle('active');
+			customSelectDropdown.classList.toggle('show');
+		});
+
+		customOptions.forEach((option) => {
+			option.addEventListener('click', function () {
+				const value = this.getAttribute('data-value');
+				const text = this.querySelector('span').textContent;
+				const icon = this.querySelector('i').className;
+
+				selectedOption.innerHTML = `<i class="${icon}"></i> ${text}`;
+				selectedOption.classList.remove('placeholder');
+
+				hiddenInput.value = value;
+
+				// Close dropdown
+				customSelectHeader.classList.remove('active');
+				customSelectDropdown.classList.remove('show');
+
+				hiddenInput.dispatchEvent(new Event('change'));
+			});
+		});
+
+		// Close dropdown when clicking outside
+		document.addEventListener('click', function () {
+			customSelectHeader.classList.remove('active');
+			customSelectDropdown.classList.remove('show');
+		});
+
+		// Prevent dropdown from closing when clicking inside
+		customSelectDropdown.addEventListener('click', function (e) {
+			e.stopPropagation();
 		});
 	}
 
