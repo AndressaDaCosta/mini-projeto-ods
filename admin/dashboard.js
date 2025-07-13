@@ -23,8 +23,13 @@ function initializeDashboard() {
 
 	// Mostrar email do usuário
 	const userEmailElement = document.querySelector('.user-email');
+	const userAvatarElement = document.getElementById('userAvatar');
 	if (userEmailElement) {
 		userEmailElement.textContent = adminEmail;
+		// Configurar avatar com primeira letra do email
+		if (userAvatarElement) {
+			userAvatarElement.textContent = adminEmail.charAt(0).toUpperCase();
+		}
 	}
 
 	// Configurar botão de logout
@@ -355,10 +360,10 @@ function createPartnerCard(partner) {
 					<i class="fas fa-map-marker-alt"></i> 
 					${partner.bairro}
 				</p>
-				<p class="partner-date">
-					<i class="fas fa-calendar-plus"></i> 
-					Cadastrado em: ${createdDate}
-				</p>
+			<p class="partner-date">
+    <i class="fas fa-calendar-plus"></i> 
+    Cadastrado em: ${formatDate(partner.dataCriacao)}
+</p>
 			</div>
 			
 			<div class="partner-details">
@@ -600,7 +605,9 @@ function openEditModal(partner) {
 				
 				<div class="form-group">
 					<label for="editCep">CEP *</label>
-					<input type="text" id="editCep" value="${partner.cep}" required>
+					<input type="text" id="editCep" value="${
+						partner.cep ? partner.cep : 'Não foi Informado'
+					}" required>
 				</div>
 				
 				<div class="form-group">
@@ -775,7 +782,7 @@ function openAddPartnerModal() {
 					<div class="form-group">
 						<label for="addTipoParceiro">Tipo *</label>
 						<select id="addTipoParceiro" required>
-							<option value="">Selecione um tipo</option>
+							<option value="">Selecione o tipo</option>
 							<option value="ECO">Ecoponto</option>
 							<option value="COO">Cooperativa</option>
 							<option value="PEV">PEV</option>
