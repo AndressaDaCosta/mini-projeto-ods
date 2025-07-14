@@ -4,6 +4,8 @@
 
 O **EcoJoinville** é uma plataforma digital interativa desenvolvida para promover a gestão eficiente de resíduos e o consumo consciente na cidade de Joinville, alinhada com os Objetivos de Desenvolvimento Sustentável (ODS) 11 e 12 da ONU.
 
+A plataforma conta com um sistema completo de gestão de parceiros, incluindo interface pública para cadastro e área administrativa para gerenciamento.
+
 ## Objetivos
 
 ### ODS 11 - Cidades e Comunidades Sustentáveis
@@ -20,142 +22,116 @@ O **EcoJoinville** é uma plataforma digital interativa desenvolvida para promov
 
 ## Funcionalidades
 
-### 🏠 Seção Início
+### 🏠 Página Principal
 
--   Apresentação impactante do projeto
--   Call-to-action para engajamento
--   Imagem representativa da sustentabilidade
+-   **Hero Section**: Apresentação impactante
+-   **Navegação Responsiva**: Menu adaptável com hamburger para mobile
+-   **Call-to-action**: Botões interativos para engajamento
 
-### 🎯 Seção Objetivos
+### 🎯 Seções Informativas
 
--   Explicação detalhada dos ODS 11 e 12
--   Descrição da plataforma EcoJoinville
--   Cards interativos com informações relevantes
+-   **Objetivos**: Explicação detalhada dos ODS 11 e 12
+-   **Impacto na Comunidade**: Visualização dos benefícios ambientais
+-   **Como Participar**: Ações práticas para engajamento
 
-### 🌍 Seção Impacto
+### 🤝 Sistema de Parceiros
 
--   **Ciclo da Reciclagem**: Processo completo de transformação
--   **Ação Individual**: Como cada pessoa pode contribuir
--   **Impactos da Má Gestão**: Consequências ambientais e sociais
+#### Cadastro de Parceiros
 
-### 🤝 Seção Ações
+-   **Formulário Inteligente**: Validação em tempo real
+-   **Tipos de Parceiros**: Ecopontos, Cooperativas, PEVs
+-   **Seleção de Resíduos**: Checkboxes com ícones representativos
+-   **Campos Obrigatórios**: Validação completa dos dados
 
--   **Doação de Recicláveis**: Conexão com cooperativas locais
--   **Campanhas e Eventos**: Participação em iniciativas
--   **Parcerias**: Oportunidades para empresas e organizações
+#### Área Administrativa
+
+-   **Dashboard Responsivo**: Visualização completa dos parceiros
+-   **Sistema de Busca**: Pesquisa por nome ou bairro
+-   **Filtros por Tipo**: Ecopontos, Cooperativas, PEVs
 
 ## Tecnologias Utilizadas
 
+### Frontend
+
 -   **HTML5**: Estrutura semântica e acessível
--   **CSS3**: Design responsivo e moderno
--   **JavaScript**: Interatividade e funcionalidades avançadas
--   **Font Awesome**: Ícones profissionais
+-   **CSS3**: Design responsivo com grid e flexbox
+-   **JavaScript (ES6+)**: Funcionalidades interativas avançadas
+-   **Font Awesome 6.5.1**: Ícones profissionais
 -   **Google Fonts**: Tipografia Roboto
 
-## Características Técnicas
+### Funcionalidades Avançadas
 
-### Design Responsivo
-
--   Layout adaptável para desktop, tablet e mobile
--   Menu hambúrguer para dispositivos móveis
--   Grid system flexível
-
-### Interatividade
-
--   Scroll suave entre seções
--   Animações de entrada para elementos
--   Modais informativos para ações
--   Efeitos de hover e transições
-
-### Acessibilidade
-
--   Estrutura HTML semântica
--   Contraste adequado de cores
--   Navegação por teclado
--   Textos alternativos para imagens
-
-### Performance
-
--   Lazy loading para imagens
--   Otimização de CSS e JavaScript
--   Fontes externas otimizadas
+-   **LocalStorage**: Persistência de dados no navegador
+-   **Validação de Formulários**: Validação client-side completa
 
 ## Estrutura do Projeto
 
 ```
 mini-projeto-ods/
-├── index.html          # Página principal
-├── style.css          # Estilos CSS
-├── script.js          # Funcionalidades JavaScript
-└── README.md          # Documentação
+├── index.html              # Página principal
+├── style.css              # Estilos principais
+├── script.js              # Funcionalidades principais
+├── admin/                 # Área administrativa
+│   ├── login.html         # Login administrativo
+│   ├── dashboard.html     # Dashboard de parceiros
+│   ├── admin.css          # Estilos da área admin
+│   ├── admin.js           # Funcionalidades admin
+│   ├── dashboard.js       # Lógica do dashboard
+└── README.md             # Documentação
 ```
 
 ## Como Usar
 
-1. **Clone o repositório**:
+### 1. Configuração Inicial
 
-    ```bash
-    git clone https://github.com/AndressaDaCosta/mini-projeto-ods.git
-    ```
+```bash
+# Clone o repositório
+git clone https://github.com/AndressaDaCosta/mini-projeto-ods.git
 
-2. **Navegue até o diretório**:
+# Navegue até o diretório
+cd mini-projeto-ods
 
-    ```bash
-    cd mini-projeto-ods
-    ```
+# Abra o arquivo index.html usando a extensão
+open with Live Server
+```
 
-3. **Abra o arquivo `index.html`** em seu navegador ou use um servidor local
+### 2. Acesso às Funcionalidades
 
-## Funcionalidades Implementadas
+#### Página Principal
 
-### ✅ Navegação
+-   Abra `index.html` no navegador
+-   Navegue pelas seções do projeto
+-   Use o formulário de cadastro de parceiros
 
--   Header fixo com logo e menu
--   Navegação suave entre seções
--   Menu responsivo para mobile
+#### Área Administrativa
 
-### ✅ Conteúdo
+-   Acesse `admin/login.html`
+-   Use as credenciais padrão ou crie uma conta
+-   Gerencie parceiros no dashboard
 
--   Seções bem estruturadas com informações relevantes
--   Cards interativos com animações
--   Botões de ação com funcionalidades
+### 3. Funcionalidades Principais
 
-### ✅ Interatividade
+#### Cadastro de Parceiros
 
--   Modais informativos
--   Animações de scroll
--   Efeitos visuais modernos
--   Botão "voltar ao topo"
+-   Preencha o formulário com dados válidos
+-   Selecione o tipo de parceiro (Ecoponto, Cooperativa, PEV)
+-   Escolha os tipos de resíduos aceitos
+-   Submeta o formulário
 
-### ✅ Responsividade
+#### Gerenciamento Administrativo
 
--   Design adaptável para todos os dispositivos
--   Otimização para mobile-first
--   Testes em diferentes resoluções
+-   Visualize todos os parceiros cadastrados
+-   Use filtros por tipo ou busca por nome/bairro
 
 ## Desenvolvedor
 
-**Andressa Costa**
+**Andressa Da Costa**
 
--   Projeto desenvolvido como parte do Módulo 2 do Lab365/SENAI
--   Foco em HTML, CSS e JavaScript
+-   📧 Email: andressadacostan@gmail.com
+-   🎓 Estudante do Lab365/SENAI - Módulo 2
+-   💻 Foco em desenvolvimento Frontend
+-   🌱 Apaixonada por sustentabilidade e tecnologia
 
-## Parceiros
+## Licença e Uso
 
--   **Prefeitura de Joinville**: Parceiro institucional
--   **Lab365**: Programa de formação
--   **SENAI**: Instituição de ensino
-
-## Referências
-
--   [Objetivos de Desenvolvimento Sustentável - ONU](https://sdgs.un.org/goals)
--   [ODS 11 - Cidades e Comunidades Sustentáveis](https://sdgs.un.org/goals/goal11)
--   [ODS 12 - Consumo e Produção Responsáveis](https://sdgs.un.org/goals/goal12)
-
-## Contribuição
-
-Este projeto foi desenvolvido como atividade acadêmica, mas sugestões e melhorias são sempre bem-vindas!
-
----
-
-_Juntos por uma Joinville mais sustentável! 🌱_
+Este projeto foi desenvolvido para fins educacionais como parte do curso Lab365/SENAI. É permitido o uso e modificação do código para fins de aprendizado e desenvolvimento pessoal.
